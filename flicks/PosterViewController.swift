@@ -10,9 +10,12 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class PosterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class PosterViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
 
     var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]?
+
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -21,6 +24,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         // Do any additional setup after loading the view.
         collectionView.dataSource = self
         collectionView.delegate = self
+        searchBar.delegate = self
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
@@ -48,8 +52,6 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     // Updates the tableView with the new data
     // Hides the RefreshControl
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        
-        // ... Create the URLRequest `myRequest` ...
         loadDataFromNetwork()
         refreshControl.endRefreshing()
     }
@@ -70,6 +72,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
                     //print(dataDictionary)
                     
                     self.movies = (dataDictionary["results"] as! [NSDictionary])
+                    self.filteredMovies = self.movies
                     self.collectionView.reloadData()
                 }
                 
@@ -91,8 +94,8 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+        if let filteredMovies = filteredMovies {
+            return filteredMovies.count
         }
         else {
             return 0
@@ -101,12 +104,43 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
-        let movie = movies![indexPath.row]
+        let movie = filteredMovies![indexPath.row]
         let posterPath = movie["poster_path"] as! String
         let baseUrl = "https://image.tmdb.org/t/p/w342"
         let imageUrl = URL(string: baseUrl + posterPath)
         cell.posterView.setImageWith(imageUrl!)
         
         return cell
+    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        // When user has entered text into the search box
+        // Use the filter method to iterate over all items in the data array
+        // For each item, return true if the item should be included and false if the
+        // item should NOT be included
+        filteredMovies = searchText.isEmpty ? movies : movies?.filter({(movie: NSDictionary) -> Bool in
+            // If dataItem matches the searchText, return true to include it
+            let title = movie["title"] as! String
+            
+            return title.range(of: searchText, options: .caseInsensitive) != nil
+        })
+        collectionView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked( _ searchBar: UISearchBar)
+    {
+        searchBar.endEditing(true)
     }
 }
