@@ -17,6 +17,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var networkErrorView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         collectionView.insertSubview(refreshControl, at: 0)
 
+        networkErrorView.isHidden = true
         loadDataFromNetwork()
     }
 
@@ -68,9 +70,11 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let data = data {
+
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     //print(dataDictionary)
-                    
+                    self.networkErrorView.isHidden = true
+
                     self.movies = (dataDictionary["results"] as! [NSDictionary])
                     self.filteredMovies = self.movies
                     self.collectionView.reloadData()
@@ -78,11 +82,13 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
                 
             }
             if error != nil {
+                self.networkErrorView.isHidden = false
+                /*
                 let alertController = UIAlertController(title: "Error", message:
                     error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
-                
+                */
                 //print (error.debugDescription)
                 //print (error?.localizedDescription as Any)
             }

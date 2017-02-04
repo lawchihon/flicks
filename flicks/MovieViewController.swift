@@ -17,7 +17,8 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-
+    @IBOutlet weak var networkErrorView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +31,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
+        networkErrorView.isHidden = true
 
         loadDataFromNetwork()
         //filteredMovies = movies
@@ -74,7 +76,8 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
             if let data = data {
                 if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
                     //print(dataDictionary)
-                    
+                    self.networkErrorView.isHidden = true
+
                     self.movies = (dataDictionary["results"] as! [NSDictionary])
                     self.filteredMovies = self.movies
                     self.tableView.reloadData()
@@ -82,11 +85,13 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
             }
             if error != nil {
+                self.networkErrorView.isHidden = false
+                /*
                 let alertController = UIAlertController(title: "Error", message:
                     error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
-                
+                */
                 //print (error.debugDescription)
                 //print (error?.localizedDescription as Any)
             }
