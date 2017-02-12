@@ -18,6 +18,9 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var networkErrorView: UIView!
+    
+    lazy var refreshControl = UIRefreshControl()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +30,11 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         collectionView.delegate = self
         searchBar.delegate = self
         
-        let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        collectionView.insertSubview(refreshControl, at: 0)
+        
+        collectionView.refreshControl = self.refreshControl
+        
+       // collectionView.insertSubview(refreshControl, at: 0)
 
         networkErrorView.isHidden = true
         loadDataFromNetwork()
@@ -55,7 +60,6 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     // Hides the RefreshControl
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         loadDataFromNetwork()
-        refreshControl.endRefreshing()
     }
 
     func loadDataFromNetwork() {
@@ -77,7 +81,10 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
 
                     self.movies = (dataDictionary["results"] as! [NSDictionary])
                     self.filteredMovies = self.movies
+                  //  self.refreshControl.endRefreshing()
+
                     self.collectionView.reloadData()
+
                 }
                 
             }
@@ -124,7 +131,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
             success: {
                 (imageRequest, imageResponse, image) -> Void in
                     // imageResponse will be nil if the image is cached
-                    if imageResponse != nil {
+                    if let imageResponse = imageResponse {
                         //print("Image was NOT cached, fade in image")
                         cell.posterView.alpha = 0.0
                         cell.posterView.image = image
@@ -176,4 +183,18 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     {
         searchBar.endEditing(true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let detailViewController = segue.destination as? DetailViewController{
+            let cell = sender as! PosterCell
+            let indexPath = collectionView.indexPath(for: cell)
+            let movie = filteredMovies![(indexPath?.row)!]
+
+            detailViewController.movie = movie
+            
+            detailViewController.image = cell.posterView
+        }        
+    }
+
 }

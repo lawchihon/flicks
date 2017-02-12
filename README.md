@@ -1,46 +1,42 @@
-# Project 1 - Flicks
+# Project 2 - Flicks
 
-Flicks is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+Flicks is a movies app displaying box office and top rental DVDs using [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 10 hours spent in total
+Time spent: 2 hours spent in total
 
 ## User Stories
 
-The following **required** functionality is complete:
+The following **required** functionality is completed:
 
-- [X] User can view a list of movies currently playing in theaters from The Movie Database.
-- [X] Poster images are loaded using the UIImageView category in the AFNetworking library.
-- [X] User sees a loading state while waiting for the movies API.
-- [X] User can pull to refresh the movie list.
+- [X] User can view movie details by tapping on a cell.
+- [ ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [ ] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
 
-- [X] User sees an error message when there's a networking error.
-- [X] Movies are displayed using a CollectionView instead of a TableView.
-- [X] User can search for a movie.
-- [X] All images fade in as they are loading.
-- [X] Customize the UI.
+- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [X] Customize the navigation bar.
 
 The following **additional** features are implemented:
 
-- [X] Switch to and back from Collection to TableView
+- [ ] List anything else that you can get done to improve the app functionality!
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. Why should we use view instead of UIAlertController to show network error?
-2. Right now everytime the user restart the app require to download all the data again, how would we store the data in local so that they don't need to download the same data again and again?
+1. 
+2. 
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/GqVyhhG.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-- Most of the develop time spent on waiting for compile.
-- Since I cannot simulate on my computer, the video walkthrough cannot include network lost
-- Right now the table view and the collection view are not sharing data.
+Describe any challenges encountered while building the app.
 
 ## License
 
@@ -56,4 +52,5 @@ Here's a walkthrough of implemented user stories:
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
-    limitations under the License.
+    limitations under the License.4001011013303120.1
+
