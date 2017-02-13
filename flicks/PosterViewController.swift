@@ -14,6 +14,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]?
+    var endpoint: String!
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -36,6 +37,9 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
        // collectionView.insertSubview(refreshControl, at: 0)
 
+        if endpoint == "" {
+            endpoint = "now_playing"
+        }
         networkErrorView.isHidden = true
         loadDataFromNetwork()
     }
@@ -64,7 +68,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
 
     func loadDataFromNetwork() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(self.endpoint)?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
@@ -131,7 +135,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
             success: {
                 (imageRequest, imageResponse, image) -> Void in
                     // imageResponse will be nil if the image is cached
-                    if let imageResponse = imageResponse {
+                    if imageResponse != nil {
                         //print("Image was NOT cached, fade in image")
                         cell.posterView.alpha = 0.0
                         cell.posterView.image = image
