@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E05A377151C5CF8CD8E8307 /* Pods_flicks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE826239AA6977A67A1D0E23 /* Pods_flicks.framework */; };
+		67000DC91E529B7100CCA6C3 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67000DC81E529B7100CCA6C3 /* MyViewController.swift */; };
 		6705DB141E42D4A000FF914A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6705DB131E42D4A000FF914A /* AppDelegate.swift */; };
 		6705DB191E42D4A400FF914A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6705DB171E42D4A400FF914A /* Main.storyboard */; };
 		6705DB1B1E42D4A700FF914A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6705DB1A1E42D4A700FF914A /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		67000DC81E529B7100CCA6C3 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		6705DB101E42D49F00FF914A /* flicks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flicks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6705DB131E42D4A000FF914A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6705DB181E42D4A400FF914A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				6705DB251E42D56900FF914A /* MovieViewController.swift */,
 				6766BCA81E43B43F00E9479A /* PosterViewController.swift */,
 				675ED1621E4AD7520044EA46 /* DetailViewController.swift */,
+				67000DC81E529B7100CCA6C3 /* MyViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				6766BCA91E43B43F00E9479A /* PosterViewController.swift in Sources */,
 				6705DB141E42D4A000FF914A /* AppDelegate.swift in Sources */,
 				6766BCA71E43AE7800E9479A /* PosterCell.swift in Sources */,
+				67000DC91E529B7100CCA6C3 /* MyViewController.swift in Sources */,
 				675ED1631E4AD7520044EA46 /* DetailViewController.swift in Sources */,
 				6705DB2A1E42D5EC00FF914A /* MovieCell.swift in Sources */,
 				6705DB261E42D56900FF914A /* MovieViewController.swift in Sources */,

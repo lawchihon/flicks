@@ -20,6 +20,8 @@ class DetailViewController: UIViewController {
     var image: UIImageView!
 
     @IBAction func backBtnTapped(_ sender: UIBarButtonItem) {
+        self.tabBarController?.tabBar.isHidden = false
+
         let _ = self.navigationController?.popViewController(animated: true)
     }
     
@@ -27,8 +29,12 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.tabBarController?.tabBar.isHidden = true
+
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height)
         
+        print (movie)
+
         let title = movie["title"] as? String
         titleLabel.text = title
         
