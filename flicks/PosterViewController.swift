@@ -37,9 +37,6 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         
        // collectionView.insertSubview(refreshControl, at: 0)
 
-        if endpoint == "" {
-            endpoint = "now_playing"
-        }
         networkErrorView.isHidden = true
         loadDataFromNetwork()
     }
@@ -64,11 +61,12 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     // Hides the RefreshControl
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         loadDataFromNetwork()
+        refreshControl.endRefreshing()
     }
 
     func loadDataFromNetwork() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(self.endpoint)?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(self.endpoint!)?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
@@ -124,8 +122,13 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
         let movie = filteredMovies![indexPath.row]
         let posterPath = movie["poster_path"] as! String
         let baseUrl = "https://image.tmdb.org/t/p/w342"
+        let originalBase = "https://image.tmdb.org/t/p/original"
+
         let imageUrl = URL(string: baseUrl + posterPath)
+        let originalUrl = URL(string: originalBase + posterPath)
+
         let imageRequest = URLRequest(url: imageUrl!)
+        let originalRequest = URLRequest(url: originalUrl!)
 
         //cell.posterView.setImageWith(imageUrl!)
 
@@ -142,6 +145,22 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
                         UIView.animate(withDuration: 0.3, animations: {
                             () -> Void in
                                 cell.posterView.alpha = 1.0
+                        }, completion: { (sucess) -> Void in
+
+                            // The AFNetworking ImageView Category only allows one request to be sent at a time
+                            // per ImageView. This code must be in the completion block.
+                            cell.posterView.setImageWith(
+                                originalRequest,
+                                placeholderImage: image,
+                                success: { (originalImageRequest, originalImageResponse, originalImage) -> Void in
+                                    
+                                    cell.posterView.image = originalImage;
+                                    
+                            },
+                                failure: { (request, response, error) -> Void in
+                                    // do something for the failure condition of the large image request
+                                    // possibly setting the ImageView's image to a default image
+                            })
                         })
                     }
                     else {
@@ -154,6 +173,11 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
             
             }
         )
+        
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 224/255.0, green: 215/255.0, blue: 247/255.0, alpha: 1.00)
+        cell.selectedBackgroundView = backgroundView
+
         return cell
     }
     
@@ -190,7 +214,7 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let detailViewController = segue.destination as? DetailViewController{
+        if let detailViewController = segue.destination as? DetailViewController {
             let cell = sender as! PosterCell
             let indexPath = collectionView.indexPath(for: cell)
             let movie = filteredMovies![(indexPath?.row)!]
@@ -198,7 +222,10 @@ class PosterViewController: UIViewController, UICollectionViewDataSource, UIColl
             detailViewController.movie = movie
             
             detailViewController.image = cell.posterView
-        }        
+        }
+        else if let tableViewController = segue.destination as? MovieViewController {
+            tableViewController.endpoint = endpoint
+        }
     }
 
 }

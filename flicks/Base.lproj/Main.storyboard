@@ -47,11 +47,11 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="153" id="BOF-Zm-af1" customClass="MovieCell" customModule="flicks" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="153" id="BOF-Zm-af1" customClass="MovieCell" customModule="flicks" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="375" height="153"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BOF-Zm-af1" id="Vo5-Eb-G3s">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="153"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vph-0A-Xqv">
@@ -79,6 +79,7 @@
                                             <outlet property="overviewLabel" destination="WYr-En-KKu" id="hqH-od-HUa"/>
                                             <outlet property="posterView" destination="TwL-o8-hfT" id="sng-cS-dBl"/>
                                             <outlet property="titleLabel" destination="vph-0A-Xqv" id="QO0-f3-X4Z"/>
+                                            <segue destination="L0N-Th-8Hq" kind="push" id="4b3-D2-Hlq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -87,7 +88,15 @@
                         <color key="backgroundColor" red="0.5450980392" green="0.4549019608" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.5450980392" green="0.4549019608" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dEE-M1-0Q3"/>
+                    <navigationItem key="navigationItem" id="dEE-M1-0Q3">
+                        <barButtonItem key="leftBarButtonItem" title="                 " id="v4G-4v-pmf"/>
+                        <barButtonItem key="rightBarButtonItem" image="Collection" id="jH1-Jo-qGk">
+                            <color key="tintColor" red="0.5450980392" green="0.4549019608" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="backBtnTapped:" destination="BYZ-38-t0r" id="Psm-NC-IGq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="F1E-Wk-Fcf" id="euS-Za-7Dh"/>
                         <outlet property="networkErrorView" destination="4M3-S7-VaY" id="wMd-Tg-wsa"/>
@@ -97,12 +106,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="85.5" y="154.5"/>
+            <point key="canvasLocation" x="632" y="189"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="Vbp-FV-snm">
             <objects>
                 <navigationController storyboardIdentifier="MoviesNavigationController" id="9cZ-I7-EBJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="BWd-r4-s3P"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uFE-gv-QzA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -113,7 +123,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IPN-TW-NBR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-648" y="534"/>
+            <point key="canvasLocation" x="-525" y="1153"/>
         </scene>
         <!--Item-->
         <scene sceneID="Ndx-rV-RXS">
@@ -126,7 +136,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="F1E-Wk-Fcf">
                                 <rect key="frame" x="0.0" y="63" width="375" height="604"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.5450980392" green="0.4549019608" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.54509803921568623" green="0.45490196078431372" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qhn-m7-kQE">
                                     <size key="itemSize" width="113" height="137"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -214,8 +224,8 @@
                                 <rect key="frame" x="0.0" y="62" width="375" height="605"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="95x-Af-1au">
-                                        <rect key="frame" x="0.0" y="-64" width="375" height="605"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="95x-Af-1au">
+                                        <rect key="frame" x="0.0" y="-125" width="375" height="666"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" misplaced="YES" id="Ynv-uF-AR0">
@@ -246,10 +256,10 @@
                         <color key="tintColor" red="0.5450980392" green="0.4549019608" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="TYA-ku-gJI">
-                        <barButtonItem key="leftBarButtonItem" title="back" id="Mhd-iF-vCw">
-                            <color key="tintColor" red="0.5450980392" green="0.4549019608" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="Back" id="Msc-sI-6jz">
+                            <color key="tintColor" red="0.5450980392" green="0.4549019608" blue="0.75686274509999996" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="backBtnTapped:" destination="L0N-Th-8Hq" id="TAU-My-iFO"/>
+                                <action selector="backBtnTapped:" destination="L0N-Th-8Hq" id="M6P-im-QH7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -267,6 +277,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Back" width="24" height="24"/>
+        <image name="Collection" width="24" height="24"/>
         <image name="Table" width="24" height="24"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -274,4 +286,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="QDJ-sC-Fnz"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -14,13 +14,19 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var movies: [NSDictionary] = []
     var filteredMovies: [NSDictionary] = []
+    var endpoint: String!
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var networkErrorView: UIView!
     
+    @IBAction func backBtnTapped(_ sender: UIBarButtonItem) {
+        let _ = self.navigationController?.popViewController(animated: true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = false;
         
         // Do any additional setup after loading the view.
         tableView.dataSource = self
@@ -64,7 +70,7 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func loadDataFromNetwork() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(self.endpoint!)?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         
@@ -158,7 +164,14 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
             }
         )
-        //print ("row \(indexPath.row)")
+
+        //cell.selectionStyle = .none
+
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 224/255.0, green: 215/255.0, blue: 247/255.0, alpha: 1.00)
+        cell.selectedBackgroundView = backgroundView
+        
+
         return cell
     }
     
@@ -193,4 +206,19 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
         searchBar.endEditing(true)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let detailViewController = segue.destination as? DetailViewController {
+            let cell = sender as! MovieCell
+            let indexPath = tableView.indexPath(for: cell)
+            let movie = filteredMovies[(indexPath?.row)!]
+            
+            detailViewController.movie = movie
+            
+            detailViewController.image = cell.posterView
+        }
+        else if let posterViewController = segue.destination as? PosterViewController {
+            posterViewController.endpoint = endpoint
+        }
+    }
 }
