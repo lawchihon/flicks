@@ -43,7 +43,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-![Screenshot](walkthrough'.gif)
+![Screenshot](walkthrough.gif)
 
 Walkthrough recorded by QuickTime Player.
 
