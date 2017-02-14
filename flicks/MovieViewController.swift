@@ -165,11 +165,13 @@ class MovieViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
         )
 
-        //cell.selectionStyle = .none
+        cell.selectionStyle = .none
 
+        /*
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(red: 224/255.0, green: 215/255.0, blue: 247/255.0, alpha: 1.00)
         cell.selectedBackgroundView = backgroundView
+        */
         
 
         return cell

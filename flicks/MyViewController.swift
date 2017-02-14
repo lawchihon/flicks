@@ -44,4 +44,9 @@ class MyViewController: UIViewController {
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
 
+    @IBAction func goToFlicks(_ sender: Any) {
+        let url = URL(string: "https://github.com/lawchihon/flicks")
+        
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+    }
 }

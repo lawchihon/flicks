@@ -11,6 +11,8 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var releaseLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var posterView: UIImageView!
 
@@ -37,6 +39,12 @@ class DetailViewController: UIViewController {
 
         let title = movie["title"] as? String
         titleLabel.text = title
+        
+        let release = movie["release_date"] as? String
+        releaseLabel.text = release
+        
+        let rating = movie["vote_average"] as? Double
+        ratingLabel.text = String(format:"%.1f", rating!) + "/10"
         
         let overview = movie["overview"] as? String
         overviewLabel.text = overview
@@ -66,4 +74,11 @@ class DetailViewController: UIViewController {
     }
     */
 
+    @IBAction func clickForDetail(_ sender: Any) {
+        let id = movie["id"]
+        let url =  URL(string: "https://www.themoviedb.org/movie/\(id!)")
+        
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+
+    }
 }
