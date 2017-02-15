@@ -38,7 +38,9 @@ class UseViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         //let videoURL = NSURL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
         //let videoURL = NSURL(fileURLWithPath: "/Users/johnlaw/Projects/CodePath/flicks/flicks/walkthrough.mov")
-        let videoURL = NSURL(fileURLWithPath: "Use")
+        //let videoURL = Bundle.main.url(forResource: "walkthrough.gif", withExtension: nil)!
+        let videoURL = Bundle.main.url(forResource: "walkthrough.mov", withExtension: nil)!
+        //let videoURL = NSURL(fileURLWithPath: "Use")
         avPlayer = AVPlayer(url: videoURL as URL)
         let playerLayer = AVPlayerLayer(player: avPlayer)
         playerLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
