@@ -8,5 +8,5 @@ target 'flicks' do
   # Pods for flicks
   pod 'AFNetworking'
   pod 'MBProgressHUD'
-  pod 'SwiftGifOrigin'
+  pod 'SwiftGifOrigin', '~> 1.6.1'
 end

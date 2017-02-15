@@ -8,15 +8,20 @@
 
 import UIKit
 import AVFoundation
+import SwiftGifOrigin
 
 class UseViewController: UIViewController {
 
     var avPlayer: AVPlayer!
 
+    @IBOutlet weak var imageView: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let imageData = try! Data(contentsOf: Bundle.main.url(forResource: "walkthrough.gif", withExtension: nil)!)
+        self.imageView.image = UIImage.gif(data: imageData)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,15 +41,13 @@ class UseViewController: UIViewController {
     */
     
     override func viewDidAppear(_ animated: Bool) {
-        //let videoURL = NSURL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-        //let videoURL = NSURL(fileURLWithPath: "/Users/johnlaw/Projects/CodePath/flicks/flicks/walkthrough.mov")
-        //let videoURL = Bundle.main.url(forResource: "walkthrough.gif", withExtension: nil)!
+        /*
         let videoURL = Bundle.main.url(forResource: "walkthrough.mov", withExtension: nil)!
-        //let videoURL = NSURL(fileURLWithPath: "Use")
         avPlayer = AVPlayer(url: videoURL as URL)
         let playerLayer = AVPlayerLayer(player: avPlayer)
         playerLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.layer.addSublayer(playerLayer)
         avPlayer.play()
+        */
     }
 }
